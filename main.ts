@@ -2,6 +2,16 @@ namespace SpriteKind {
     export const Slime = SpriteKind.create()
     export const Robot = SpriteKind.create()
 }
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (Title == 0 && mySprite.isHittingTile(CollisionDirection.Bottom)) {
+        mySprite.vy = -200
+    }
+})
+controller.player2.onButtonEvent(ControllerButton.B, ControllerButtonEvent.Pressed, function () {
+    if (Player_2 == 1) {
+        mySprite2.setPosition(mySprite.x, mySprite.y)
+    }
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Title == 0 && mySprite.isHittingTile(CollisionDirection.Bottom)) {
         mySprite.vy = -200
@@ -9,7 +19,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 controller.player2.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
     if (Player_2 == 1) {
-        mySprite2.x = -200
+        mySprite2.vy = -200
     }
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -506,6 +516,11 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
 sprites.onCreated(SpriteKind.Slime, function (sprite) {
 	
 })
+controller.player2.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Pressed, function () {
+    if (Player_2 == 1) {
+        mySprite2.vy = -200
+    }
+})
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Fuse == 0) {
         Direction = 0
@@ -886,7 +901,7 @@ controller.player2.onEvent(ControllerEvent.Connected, function () {
         `, SpriteKind.Player)
     info.player2.setLife(5)
     Player_2 = 1
-    controller.player2.moveSprite(mySprite, 100, 0)
+    controller.player2.moveSprite(mySprite2, 100, 0)
     tiles.placeOnRandomTile(mySprite2, assets.tile`myTile3`)
 })
 controller.player1.onButtonEvent(ControllerButton.B, ControllerButtonEvent.Pressed, function () {
@@ -1247,6 +1262,7 @@ controller.player1.onButtonEvent(ControllerButton.B, ControllerButtonEvent.Press
             }
         } else {
             Fuse = 0
+            mySprite2.setPosition(mySprite.x, mySprite.y)
             animation.runImageAnimation(
             mySprite,
             [img`
@@ -1315,10 +1331,46 @@ controller.player1.onButtonEvent(ControllerButton.B, ControllerButtonEvent.Press
 let Direction = 0
 let Fuse = 0
 let mySprite2: Sprite = null
-let mySprite: Sprite = null
 let Title = 0
 let Player_2 = 0
 let mySprite3: Sprite = null
+let mySprite: Sprite = null
+let Camera = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Player)
+mySprite = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Player)
 mySprite3 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -1596,7 +1648,11 @@ scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     `)
 tiles.setTilemap(tilemap`level1`)
-mySprite = sprites.create(img`
+tiles.placeOnRandomTile(mySprite, assets.tile`myTile3`)
+pause(100)
+color.startFade(color.Black, color.originalPalette, 200)
+scene.cameraFollowSprite(mySprite)
+mySprite.setImage(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . f f f f . . . . . . 
@@ -1613,11 +1669,7 @@ mySprite = sprites.create(img`
     . . . . . . f f f f . . . . . . 
     . . . . . f 9 9 9 9 f . . . . . 
     . . . . . f f f f f f . . . . . 
-    `, SpriteKind.Player)
-tiles.placeOnRandomTile(mySprite, assets.tile`myTile3`)
-pause(100)
-color.startFade(color.Black, color.originalPalette, 200)
-scene.cameraFollowSprite(mySprite)
+    `)
 controller.player1.moveSprite(mySprite, 100, 0)
 forever(function () {
     if (Direction == 0) {
@@ -1626,6 +1678,12 @@ forever(function () {
         if (Direction == 1) {
             mySprite3.setPosition(mySprite.x + 20, mySprite.y)
         }
+    }
+})
+forever(function () {
+    mySprite.vy += 10
+    if (Player_2 == 1) {
+        mySprite2.vy += 10
     }
 })
 forever(function () {
@@ -1698,6 +1756,8 @@ forever(function () {
             while (controller.B.isPressed()) {
                 pause(1)
             }
+        } else {
+            music.jumpDown.playUntilDone()
         }
     }
     if (mySprite.tileKindAt(TileDirection.Bottom, assets.tile`myTile4`)) {
@@ -1707,7 +1767,7 @@ forever(function () {
     if (Player_2 == 1 || Fuse == 1) {
         if (mySprite2.tileKindAt(TileDirection.Bottom, assets.tile`myTile2`)) {
             tiles.placeOnRandomTile(mySprite2, assets.tile`myTile3`)
-            info.changeLifeBy(-1)
+            music.jumpDown.playUntilDone()
         }
         if (mySprite2.tileKindAt(TileDirection.Bottom, assets.tile`myTile4`)) {
             mySprite2.vy = -300
@@ -1716,8 +1776,5 @@ forever(function () {
     }
 })
 forever(function () {
-    mySprite.vy += 10
-    if (Player_2 == 1) {
-        mySprite2.vy += 10
-    }
+	
 })
