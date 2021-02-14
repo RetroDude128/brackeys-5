@@ -1,5 +1,6 @@
 namespace SpriteKind {
     export const Slime = SpriteKind.create()
+    export const Robot = SpriteKind.create()
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Title == 0 && mySprite.isHittingTile(CollisionDirection.Bottom)) {
@@ -502,7 +503,11 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
         mySprite.vx = 100
     }
 })
+sprites.onCreated(SpriteKind.Slime, function (sprite) {
+	
+})
 function Level_start () {
+    Done = 0
     for (let value of tiles.getTilesByType(assets.tile`myTile5`)) {
         mySprite4 = sprites.create(img`
             . . . . . . . . . . . . . . . . 
@@ -525,6 +530,34 @@ function Level_start () {
         tiles.placeOnTile(mySprite4, value)
         tiles.setTileAt(value, assets.tile`transparency16`)
     }
+    Done += 1
+    for (let value of tiles.getTilesByType(assets.tile`myTile6`)) {
+        mySprite4 = sprites.create(img`
+            ................
+            ................
+            ................
+            ................
+            ...ffffffffff...
+            ...fbbbbbbddf...
+            ...fb7ff7bddf...
+            ...fbffffbddf...
+            ...fbf77fbddf...
+            ...fbbbbbbddf...
+            ...ffffffffff...
+            .......ff.......
+            .....ffffff.....
+            ..ff.fbffdf.....
+            ...fffbbfff.....
+            ..ff.fbffdf.....
+            .....fbbbdf.....
+            .....ffffff.....
+            ....ff...ff.....
+            ....ff...ff.....
+            `, SpriteKind.Robot)
+        tiles.placeOnTile(mySprite4, value)
+        tiles.setTileAt(value, assets.tile`transparency16`)
+    }
+    Done += 1
 }
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Fuse == 0) {
@@ -1333,6 +1366,7 @@ controller.player1.onButtonEvent(ControllerButton.B, ControllerButtonEvent.Press
     }
 })
 let mySprite4: Sprite = null
+let Done = 0
 let Direction = 0
 let Fuse = 0
 let mySprite2: Sprite = null
@@ -1648,6 +1682,12 @@ forever(function () {
             mySprite3.setPosition(mySprite.x + 20, mySprite.y)
         }
     }
+})
+forever(function () {
+    mySprite4.vx = 50
+    pause(100)
+    mySprite4.vx = -50
+    pause(100)
 })
 forever(function () {
     if (mySprite.tileKindAt(TileDirection.Bottom, assets.tile`myTile2`)) {
