@@ -1335,7 +1335,7 @@ let Title = 0
 let Player_2 = 0
 let mySprite3: Sprite = null
 let mySprite: Sprite = null
-let Music = 1
+let Music = 3
 let Camera = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
