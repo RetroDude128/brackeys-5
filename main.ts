@@ -1719,6 +1719,20 @@ forever(function () {
     }
 })
 forever(function () {
+	
+})
+forever(function () {
+    if (Fuse == 1 && (mySprite.tileKindAt(TileDirection.Bottom, assets.tile`myTile5`) || mySprite.tileKindAt(TileDirection.Bottom, assets.tile`myTile6`))) {
+        tiles.setTileAt(tiles.getTileLocation(Math.round(mySprite.x / 16) - 1, Math.round(mySprite.y / 16) + 1), assets.tile`transparency16`)
+        tiles.setWallAt(tiles.getTileLocation(Math.round(mySprite.x / 16) - 1, Math.round(mySprite.y / 16) + 1), false)
+        tiles.setTileAt(tiles.getTileLocation(Math.round(mySprite.x / 16) - 2, Math.round(mySprite.y / 16) + 1), assets.tile`transparency16`)
+        tiles.setWallAt(tiles.getTileLocation(Math.round(mySprite.x / 16) - 2, Math.round(mySprite.y / 16) + 1), false)
+        tiles.setTileAt(tiles.getTileLocation(Math.round(mySprite.x / 16), Math.round(mySprite.y / 16) + 1), assets.tile`transparency16`)
+        tiles.setWallAt(tiles.getTileLocation(Math.round(mySprite.x / 16), Math.round(mySprite.y / 16) + 1), false)
+        scene.cameraShake(8, 500)
+    }
+})
+forever(function () {
     if (mySprite.tileKindAt(TileDirection.Bottom, assets.tile`myTile2`)) {
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile3`)
         info.changeLifeBy(-1)
@@ -1795,6 +1809,9 @@ forever(function () {
     if (mySprite.tileKindAt(TileDirection.Bottom, assets.tile`myTile4`)) {
         mySprite.vy = -300
     }
+    if (mySprite.tileKindAt(TileDirection.Bottom, assets.tile`myTile10`)) {
+        mySprite.vy = -500
+    }
     if (Player_2 == 1 || Fuse == 1) {
         if (mySprite2.tileKindAt(TileDirection.Bottom, assets.tile`myTile2`)) {
             tiles.placeOnRandomTile(mySprite2, assets.tile`myTile3`)
@@ -1803,19 +1820,8 @@ forever(function () {
         if (mySprite2.tileKindAt(TileDirection.Bottom, assets.tile`myTile4`)) {
             mySprite2.vy = -300
         }
-    }
-})
-forever(function () {
-	
-})
-forever(function () {
-    if (Fuse == 1 && (mySprite.tileKindAt(TileDirection.Bottom, assets.tile`myTile5`) || mySprite.tileKindAt(TileDirection.Bottom, assets.tile`myTile6`))) {
-        tiles.setTileAt(tiles.getTileLocation(Math.round(mySprite.x / 16) - 1, Math.round(mySprite.y / 16) + 1), assets.tile`transparency16`)
-        tiles.setWallAt(tiles.getTileLocation(Math.round(mySprite.x / 16) - 1, Math.round(mySprite.y / 16) + 1), false)
-        tiles.setTileAt(tiles.getTileLocation(Math.round(mySprite.x / 16) - 2, Math.round(mySprite.y / 16) + 1), assets.tile`transparency16`)
-        tiles.setWallAt(tiles.getTileLocation(Math.round(mySprite.x / 16) - 2, Math.round(mySprite.y / 16) + 1), false)
-        tiles.setTileAt(tiles.getTileLocation(Math.round(mySprite.x / 16), Math.round(mySprite.y / 16) + 1), assets.tile`transparency16`)
-        tiles.setWallAt(tiles.getTileLocation(Math.round(mySprite.x / 16), Math.round(mySprite.y / 16) + 1), false)
-        scene.cameraShake(8, 500)
+        if (mySprite2.tileKindAt(TileDirection.Bottom, assets.tile`myTile10`)) {
+            mySprite2.vy = -500
+        }
     }
 })
