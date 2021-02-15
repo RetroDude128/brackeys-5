@@ -1335,6 +1335,7 @@ let Title = 0
 let Player_2 = 0
 let mySprite3: Sprite = null
 let mySprite: Sprite = null
+let Music = 1
 let Camera = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -1672,6 +1673,37 @@ mySprite.setImage(img`
     `)
 controller.player1.moveSprite(mySprite, 100, 0)
 forever(function () {
+    if (Music == 1) {
+        for (let index = 0; index < 2; index++) {
+            music.playMelody("A D F - G D E C ", 150)
+        }
+        for (let index = 0; index < 5; index++) {
+            music.playMelody("A D F C G D E C ", 150)
+        }
+    } else if (Music == 2) {
+        for (let index = 0; index < 3; index++) {
+            music.playMelody("A D F - G D E C ", 400)
+        }
+        for (let index = 0; index < 2; index++) {
+            music.playMelody("G - G - G - - G ", 400)
+            music.playMelody("G - G G - G G - ", 400)
+            music.playMelody("G - G - G - C5 B ", 400)
+        }
+        music.playMelody("C D E D E F E F ", 400)
+        music.playMelody("G A G A B A F D ", 400)
+    } else {
+        for (let index = 0; index < 2; index++) {
+            music.playMelody("E D F A G B G E ", 500)
+        }
+        for (let index = 0; index < 4; index++) {
+            music.playMelody("G - G - G - - G ", 500)
+            music.playMelody("G - G G - G G - ", 500)
+            music.playMelody("G - G - G E D C ", 500)
+        }
+        music.playMelody("D E F E F G E C ", 500)
+    }
+})
+forever(function () {
     if (Direction == 0) {
         mySprite3.setPosition(mySprite.x - 20, mySprite.y)
     } else {
@@ -1762,7 +1794,6 @@ forever(function () {
     }
     if (mySprite.tileKindAt(TileDirection.Bottom, assets.tile`myTile4`)) {
         mySprite.vy = -300
-        music.jumpUp.playUntilDone()
     }
     if (Player_2 == 1 || Fuse == 1) {
         if (mySprite2.tileKindAt(TileDirection.Bottom, assets.tile`myTile2`)) {
@@ -1771,10 +1802,20 @@ forever(function () {
         }
         if (mySprite2.tileKindAt(TileDirection.Bottom, assets.tile`myTile4`)) {
             mySprite2.vy = -300
-            music.jumpUp.playUntilDone()
         }
     }
 })
 forever(function () {
 	
+})
+forever(function () {
+    if (Fuse == 1 && (mySprite.tileKindAt(TileDirection.Bottom, assets.tile`myTile5`) || mySprite.tileKindAt(TileDirection.Bottom, assets.tile`myTile6`))) {
+        tiles.setTileAt(tiles.getTileLocation(Math.round(mySprite.x / 16) - 1, Math.round(mySprite.y / 16) + 1), assets.tile`transparency16`)
+        tiles.setWallAt(tiles.getTileLocation(Math.round(mySprite.x / 16) - 1, Math.round(mySprite.y / 16) + 1), false)
+        tiles.setTileAt(tiles.getTileLocation(Math.round(mySprite.x / 16) - 2, Math.round(mySprite.y / 16) + 1), assets.tile`transparency16`)
+        tiles.setWallAt(tiles.getTileLocation(Math.round(mySprite.x / 16) - 2, Math.round(mySprite.y / 16) + 1), false)
+        tiles.setTileAt(tiles.getTileLocation(Math.round(mySprite.x / 16), Math.round(mySprite.y / 16) + 1), assets.tile`transparency16`)
+        tiles.setWallAt(tiles.getTileLocation(Math.round(mySprite.x / 16), Math.round(mySprite.y / 16) + 1), false)
+        scene.cameraShake(8, 500)
+    }
 })
