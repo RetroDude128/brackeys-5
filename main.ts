@@ -1336,12 +1336,12 @@ let Slimester: Sprite = null
 let Direction = 0
 let Fuse = 0
 let mySprite2: Sprite = null
-let level_select = 0
 let text = ""
 let Title = 0
 let Player_2 = 0
 let mySprite3: Sprite = null
 let mySprite: Sprite = null
+let level_select = 1
 let Music = 1
 let Camera = sprites.create(img`
     . . . . . . . . . . . . . . . . 
@@ -1702,6 +1702,7 @@ forever(function () {
         }
         for (let index = 0; index < 2; index++) {
             music.playMelody("G - G - G - - G ", 400)
+            // ... --- ...
             music.playMelody("G - G G - G G - ", 400)
             music.playMelody("G - G - G - C5 B ", 400)
         }
@@ -1713,6 +1714,7 @@ forever(function () {
         }
         for (let index = 0; index < 4; index++) {
             music.playMelody("G - G - G - - G ", 500)
+            // ... --- ...
             music.playMelody("G - G G - G G - ", 500)
             music.playMelody("G - G - G E D C ", 500)
         }
