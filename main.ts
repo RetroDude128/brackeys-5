@@ -3,6 +3,9 @@ namespace SpriteKind {
     export const Robot = SpriteKind.create()
     export const BossBattle = SpriteKind.create()
 }
+/**
+ * Watch Tpot is good
+ */
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Title == 0 && mySprite.isHittingTile(CollisionDirection.Bottom)) {
         mySprite.vy = -200
@@ -1330,7 +1333,6 @@ controller.player1.onButtonEvent(ControllerButton.B, ControllerButtonEvent.Press
     }
 })
 let mySprite6: Sprite = null
-let mySprite5: Sprite = null
 let mySprite4: Sprite = null
 let Mr_Bot_Phase_2: Sprite = null
 let Mr_Bot_Phase_1: Sprite = null
@@ -1911,18 +1913,20 @@ forever(function () {
     if (Player_2 == 1 || Fuse == 1) {
         if (mySprite2.tileKindAt(TileDirection.Bottom, assets.tile`myTile2`)) {
             tiles.placeOnRandomTile(mySprite2, assets.tile`myTile3`)
-            music.jumpDown.playUntilDone()
             info.player2.changeLifeBy(-1)
             if (Fuse == 1) {
                 info.player2.changeLifeBy(1)
+            } else {
+                music.jumpDown.playUntilDone()
             }
         }
         if (mySprite2.tileKindAt(TileDirection.Bottom, assets.tile`myTile31`)) {
             tiles.placeOnRandomTile(mySprite2, assets.tile`myTile3`)
-            music.jumpDown.playUntilDone()
             info.player2.changeLifeBy(-1)
             if (Fuse == 1) {
                 info.player2.changeLifeBy(1)
+            } else {
+                music.jumpDown.playUntilDone()
             }
         }
         if (mySprite2.tileKindAt(TileDirection.Bottom, assets.tile`myTile4`)) {
@@ -3182,41 +3186,6 @@ forever(function () {
                     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
                     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
                     `)
-                mySprite5 = sprites.create(img`
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    ffffffffffffffffffffffffffffffff
-                    `, SpriteKind.Player)
-                scene.cameraFollowSprite(mySprite5)
                 animation.runImageAnimation(
                 mySprite,
                 assets.animation`Cutscene 1`,
@@ -3225,7 +3194,7 @@ forever(function () {
                 )
                 pause(4000)
                 animation.runImageAnimation(
-                mySprite5,
+                mySprite,
                 assets.animation`Cutscene 2`,
                 200,
                 false
@@ -3358,6 +3327,29 @@ forever(function () {
                     `)
                 tiles.setTilemap(tilemap`level III`)
                 tiles.placeOnRandomTile(mySprite, assets.tile`myTile3`)
+                animation.runImageAnimation(
+                mySprite,
+                [img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . f f f f . . . . . . 
+                    . . . . . f 1 1 1 1 f . . . . . 
+                    . . . . f 1 1 1 1 1 1 f . . . . 
+                    . . . f 1 1 1 9 9 9 9 9 f . . . 
+                    . . . f 1 1 1 9 9 9 f 9 f . . . 
+                    . . . f 1 1 1 9 9 9 f 9 f . . . 
+                    . . . f 1 1 1 9 9 9 9 9 f . . . 
+                    . . . . f 1 1 1 1 1 1 f . . . . 
+                    . . . . . f 1 1 1 1 f . . . . . 
+                    . . . . . . f f f f . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . f f f f . . . . . . 
+                    . . . . . f 9 9 9 9 f . . . . . 
+                    . . . . . f f f f f f . . . . . 
+                    `],
+                200,
+                true
+                )
                 scene.cameraFollowSprite(mySprite)
                 color.startFade(color.Black, color.originalPalette)
             }
@@ -3372,6 +3364,7 @@ forever(function () {
         Boss_HP = 32
         Music = 3
         tiles.placeOnRandomTile(mySprite6, assets.tile`myTile11`)
+        mySprite6.follow(mySprite)
     }
     if (Boss2 == 3) {
         if (mySprite.overlapsWith(mySprite6) && 0 < mySprite.vy) {
@@ -3420,6 +3413,11 @@ forever(function () {
             true
             )
             pause(2000)
+            if (Boss_HP == 0) {
+                game.over(true)
+            }
+            tiles.placeOnRandomTile(mySprite6, assets.tile`myTile11`)
+            Boss_HP += -1
             animation.runImageAnimation(
             mySprite6,
             [img`
@@ -3445,6 +3443,7 @@ forever(function () {
             )
         }
         if (mySprite.overlapsWith(mySprite6) && !(0 < mySprite.vy)) {
+            info.changeLifeBy(-1)
             if (Fuse == 1) {
                 info.changeLifeBy(1)
                 Fuse = 0
@@ -3507,7 +3506,7 @@ forever(function () {
                     . . . . . f 3 3 3 3 f . . . . . 
                     . . . . . f f f f f f . . . . . 
                     `)
-                tiles.placeOnRandomTile(mySprite2, assets.tile`myTile3`)
+                tiles.placeOnRandomTile(mySprite, assets.tile`myTile3`)
                 while (controller.B.isPressed()) {
                     pause(1)
                 }
