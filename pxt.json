@@ -1,5 +1,5 @@
 {
-    "name": "Power Up Player 2",
+    "name": "PUP2 - The New World",
     "description": "",
     "dependencies": {
         "device": "*",
@@ -22,7 +22,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "1.3.44",
+        "target": "1.4.45",
         "targetId": "arcade"
     },
     "supportedTargets": [
